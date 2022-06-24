@@ -112,8 +112,6 @@
 												@foreach ($edit_coures as $courses)
 												  <input name="courses[]" @if ( in_array( $courses , json_decode( $student_edit -> courses )) ) checked @endif value="{{ $courses }}" type="checkbox">{{ $courses }}<br>
 												@endforeach
-
-
 											</div>
 										</div>
 										<div class="form-group row">

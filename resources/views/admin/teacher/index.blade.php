@@ -46,29 +46,45 @@
                                                     <th>Name</th>
                                                     <th>Email</th>
                                                     <th>Cell</th>
+                                                    <th>Username</th>
                                                     <th>Department</th>
                                                     <th>gender</th>
+                                                    <th>Courses</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <h2 class="table-avatar">
-                                                            <a href="profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{ asset('admin/assets/img/doctors/doctor-thumb-01.jpg') }}" alt="User Image"></a>
-                                                            <a href="profile.html">Dr. Ruby Perrin</a>
-                                                        </h2>
-                                                    </td>
-                                                    <td>bhuiyan@gmail.com</td>
-                                                    <td>07510886524</td>
-                                                    <td>Department</td>
-                                                    <td>Male</td>
-                                                    <td>
-                                                        <a class="btn btn-sm btn-info" href="{{ route('teacher.show', 11) }}"><i class="fa fa-eye"></i></a>
-                                                        <a class="btn btn-sm btn-danger" href="{{ route('teacher.edit', 22) }}"><i class="fa fa-edit"></i></a>
-                                                        <a class="btn btn-sm btn-warning" href="#"><i class="fa fa-trash"></i></a>
-                                                    </td>
-
+                                            @forelse ($all_teacher as $teacher)
+                                            <tr>
+                                                <td>
+                                                    <h2 class="table-avatar">
+                                                        <a href="profile.html" class="avatar avatar-sm mr-2"><img style="max-width: 100%;max-height:100%;object-fit:cover" class="avatar-img rounded-circle" src="{{ url('storage/teacher_img/', $teacher -> photo) }}" alt="User Image"></a>
+                                                        <a href="profile.html">{{ $teacher -> name }}</a>
+                                                    </h2>
+                                                </td>
+                                                <td>{{ $teacher -> email }}m</td>
+                                                <td>{{ $teacher -> cell }}</td>
+                                                <td>{{ $teacher -> username }}</td>
+                                                <td>{{ $teacher -> department }}</td>
+                                                <td>{{ $teacher -> gender }}</td>
+                                                <td>
+                                                    <ul>
+                                                       @forelse ( json_decode($teacher -> courses) as $teachers)
+                                                           <li>{{ $teachers }}</li>
+                                                       @empty
+                                                           <li>Empty</li>
+                                                       @endforelse
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-sm btn-info" href="{{ route('teacher.show',  $teacher -> id ) }}"><i class="fa fa-eye"></i></a>
+                                                    <a class="btn btn-sm btn-danger" href="{{ route('teacher.edit', 22) }}"><i class="fa fa-edit"></i></a>
+                                                    <a class="btn btn-sm btn-warning" href="#"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                            @empty
+                                                
+                                            @endforelse
                                             </tbody>
                                         </table>
                                     </div>

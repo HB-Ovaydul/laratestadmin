@@ -23,7 +23,7 @@
     
                         <!--Back button-->
                         <div class="user-btn">
-                            <a  class="btn btn-primary shadow mx-auto" href="{{ route('teacher.index') }}">Back</a>
+                            <a  class="btn btn-primary shadow mx-auto" href="{{ route('teacher.index', $teacher_data -> id) }}">Back</a>
                         </div>
                         <br>
                         <!--back button-->
@@ -36,11 +36,17 @@
                     <img style="max-height: 100%; max-width:100%; object-fit:cover;"  class="avatar-xxl rounded-circle shadow border-10 border border-primary" src="{{ url('admin/assets/img/profiles/hb_ovaydul.jpg') }}" alt="">
                 </div>
                 <div class="card-user">
-                    <h2>Ovaydul</h2>
-                    <h4>Email</h4>
-                    <h4>Cell</h4>
-                    <h4>Department</h4>
-                    <h4>Gender</h4>
+                    <h2>{{ $teacher_data -> name }}</h2>
+                    <h4>{{ $teacher_data -> cell }}</h4>
+                    <h4>{{ $teacher_data -> email }}</h4>
+                    <h4>{{ $teacher_data -> username }}</h4>
+                    <h4>{{ $teacher_data -> department }}</h4>
+                    <h4>{{ $teacher_data -> gender }}</h4>
+                    @forelse (json_decode($teacher_data -> courses) as $teachers)
+                        <li>{{ $teachers }}</li>
+                    @empty
+                        <li>empty!</li>
+                    @endforelse
                 </div>
             </div>
         </div>

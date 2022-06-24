@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
+use App\Mail\studntmail;
 use App\Models\admin\studnt;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use App\Notifications\ConfrimNotification;
 
 class studentcontroller extends Controller
 {
@@ -48,7 +51,7 @@ class studentcontroller extends Controller
          $file_name = '';
       }
 // Data Create
-      studnt::create([
+     $student = studnt::create([
          'name'          => $request -> name,
          'email'         => $request -> email,
          'cell'          => $request -> cell,
@@ -58,6 +61,22 @@ class studentcontroller extends Controller
          'courses'        => json_encode($request -> courses),
          'photo'        => $file_name,
       ]);
+
+     // Email Notification
+      $data = [
+         'name'      => $request -> name,
+         'email'      => $request -> email,
+         'cell'      => $request -> cell,
+         'photo'      => $file_name,
+
+      ];
+      
+      $student -> notify( new ConfrimNotification($data));
+       
+       // confrim mail
+      
+      // Mail::to($request -> email) -> send(new studntmail($data));
+      //retrun back
       return back() -> with('success', 'Account Created Successful !');
     }
 /**
